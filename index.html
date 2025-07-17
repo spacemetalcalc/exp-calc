@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>XP Calculator</title>
+  <style>
+    body { font-family: sans-serif; max-width: 400px; margin: 2rem auto; }
+    label, input, button { display: block; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h2>Pokémon XP Calculator</h2>
+
+  <label for="level">Level (1–20):</label>
+  <input type="number" id="level" min="1" max="20">
+
+  <label for="sr">SR (e.g. 1, 5, 12):</label>
+  <input type="number" id="sr" step="0.01">
+
+  <button onclick="calculateXP()">Calculate XP</button>
+  <p id="result"></p>
+
+  <script>
+    function calculateXP() {
+      const level = parseFloat(document.getElementById("level").value);
+      const sr = parseFloat(document.getElementById("sr").value);
+      let a, b, c;
+
+      if (level >= 1 && level <= 4)       [a, b, c] = [210.51, 0.5299, 1.1632];
+      else if (level <= 8)               [a, b, c] = [328.90, 0.9043, 0.6870];
+      else if (level <= 12)              [a, b, c] = [219.60, 1.3341, 0.3822];
+      else if (level <= 16)              [a, b, c] = [331.02, 1.2250, 0.1961];
+      else if (level <= 20)              [a, b, c] = [570.58, 1.0763, 0.1335];
+      else {
+        document.getElementById("result").innerText = "Level must be between 1 and 20.";
+        return;
+      }
+
+      const xp = Math.round(a * Math.pow(level, b) * Math.pow(sr, c));
+      document.getElementById("result").innerText = `XP Earned: ${xp}`;
+    }
+  </script>
+</body>
+</html>
